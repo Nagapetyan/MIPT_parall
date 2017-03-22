@@ -4,7 +4,7 @@
 #include <string.h>
 #include <assert.h>
 
-#define  n 10
+#define  n 2000
 
 typedef struct Bounds
 {
@@ -33,19 +33,11 @@ int main(int argc, char **argv)
 	FILE *inputData = fopen("dataForTask2.txt", "r");
 	assert(inputData != NULL);
 
-	int check;
-	check = fread(fisrstNumber, n,1, inputData);
-//	if(!check) {
-//		fprintf(stderr, "Unable to read first \n" );
-//		exit(0);
-//	}
+	fread(fisrstNumber, n,1, inputData);
+
 	char tmp;
 	fread(&tmp, 1,1,inputData);
-	check = fread(secondNumber, n, 1, inputData);
-//	if(!check) {
-//		fprintf(stderr, "Unable to read second\n" );
-//		exit(0);
-//	}
+	fread(secondNumber, n, 1, inputData);
 
 	fclose(inputData);
 
@@ -64,29 +56,13 @@ int main(int argc, char **argv)
    	assert(index != NULL);
    	int counts = countingOverflow(fisrstNumber, secondNumber, index);
  
- //	printf("%d\n", counts);
-  // 	for (int i = 0; i < counts; i++)
-   //		printf("index[%d] =%d\n",i, index[i]);
    	determineBounds(rank, num_proc, counts, &bounds, index);	
    	
    	char *result = (char*)calloc(counts, sizeof(char));
    	assert(result != NULL);
 
-   //	printf("rank %d  up %d   down   %d\n", rank,  bounds.up, bounds.down);
-
    	int carry;
    	carry = digitAddition(bounds, fisrstNumber, secondNumber, result);
-
-  //	printf("rank %d  %d  %s\n",rank,  (int)strlen(result), result);
-   //	if(rank == num_proc-1)
-   //		result[n] = carry;
-
-   
-   
-   //	printf("%s\n+\n%s\n=\n%d%s\n",fisrstNumber, secondNumber,  carry, result);
-
-   
-   //	printf("rank = %d  result=%d%s\n",rank, carry,result );
 
    	FILE *answer = fopen("answer.txt", "a");
 
@@ -103,7 +79,6 @@ int main(int argc, char **argv)
    	}
    	if (rank != 0)
    	{
-   	//	printf("rank=%d result:%s\n", rank, result);
    		int control = 1;
    		MPI_Send(&control, 1, MPI_INT, rank-1, 0, MPI_COMM_WORLD);
    	}
@@ -126,8 +101,6 @@ int countingOverflow(const char *fisrstNumber, const char *secondNumber, int *in
 			if ( ((toDigit(fisrstNumber[i]) * toDigit(secondNumber[i])) == 1) && ((toDigit(fisrstNumber[i+1]) * toDigit(secondNumber[i+1])) != 1)){
 					index[count] = i;
 					count++;
-				//	printf("%d and i = %d\n", count,i);
-
 				}
 		}
 		else if ((toDigit(fisrstNumber[i]) * toDigit(secondNumber[i])) == 1){
@@ -151,25 +124,6 @@ void determineBounds(int rank, int num_proc, int count, bound_t *bounds, const i
 		else
 			bounds->up = index[count*(num_proc - rank - 1) / num_proc] + 1;
 	}
-	/*
-	else{
-		if( rank < count){
-			if (rank == 0)
-				bounds->down = n-1;
-			else
-				bounds->down = index[count - rank];
-			bounds->up = index[count - rank -1] + 1;
-		}	
-		else{
-			if(rank == num_proc - 1)
-				bounds->up = 0;
-			else
-				bounds->up = index[0]  * (num_proc - 1 - rank)/ (num_proc - count) + 1;
-			bounds->down = index[0] * (num_proc -  rank)/(num_proc - count);
-
-		}
-	}
-	*/
 	else{
 		if (num_proc - rank <= count){
 			if (rank == num_proc - 1)
@@ -196,23 +150,16 @@ void determineBounds(int rank, int num_proc, int count, bound_t *bounds, const i
 int digitAddition(const bound_t bounds, const char *fisrstNumber, const char *secondNumber, char *result){
 	int iCarry = 0;
 	for(int i = bounds.down; i > bounds.up-1; i--){
-//		printf("fisrstNumber[%d]=%c secondNumber[%d]=%c\n", i,fisrstNumber[i], i, secondNumber[i]);
 		result[i - bounds.up] = toChar(toDigit(fisrstNumber[i]) ^ toDigit(secondNumber[i]));
-	//	printf("first   %c\n", result[i]);
 		result[i  - bounds.up] = toChar(toDigit(result[i  - bounds.up]) ^ iCarry);
-	//	printf("second   %c\n", result[i- bounds.down]);
 		iCarry = (toDigit(fisrstNumber[i]) * toDigit(secondNumber[i])) || (toDigit(fisrstNumber[i]) * iCarry) || (toDigit(secondNumber[i] )* iCarry);
-	//	printf("%d\n", iCarry);
 	}
-//	printf("%s\n", result);
-//	printf("\n");
 	return iCarry;
 }
 
 
 
-static inline void Free(void *buf)
-{
+static inline void Free(void *buf){
 	free(buf);
 	buf = NULL;
 }

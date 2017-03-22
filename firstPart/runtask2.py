@@ -12,10 +12,10 @@ if check == 1:
 file = open("dataForTask2.txt", 'w+')
 
 for _ in xrange(2):
-	number = uniform(0,2,10)
+	number = uniform(0,2,2000)
 	number = number.astype(int)
 
-	for j in xrange(10):
+	for j in xrange(2000):
 		file.write(str(number[j]))
 	file.write('\n')
 
