@@ -173,9 +173,11 @@ void matricesGenerator(int **A, int **B, const int size){
 void createCartesianTopology(grid_info_t *grid_info){
 	MPI_Comm_rank(MPI_COMM_WORLD, &(grid_info->rank));
 	MPI_Comm_size(MPI_COMM_WORLD, &(grid_info->num_proc));
+	ASSERT(grid_info->num_proc %2 == 0, "Wrong num of proc");
 
 	grid_info->grid_size = (int) sqrt(grid_info->num_proc);
 	ASSERT((grid_info->grid_size * (grid_info->grid_size)) == (grid_info->num_proc), "Wrong num of proc");
+
 
 	int dims[2], periods[2], reorder = 0;
 	dims[0] =  dims[1] = grid_info->grid_size;
