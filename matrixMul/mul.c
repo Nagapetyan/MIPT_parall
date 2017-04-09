@@ -124,7 +124,7 @@ int main(int argc, char **argv){
 		Free(data);
 	}
 
-	free_2d(true);
+	free_2d(true, size);
 	Free(totalresult);
 	Free(result);
 
