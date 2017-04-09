@@ -53,6 +53,7 @@ int main(int argc, char **argv){
 
 	grid_info_t grid_info; 
 	createCartesianTopology(&grid_info);
+	ASSERT(size % grid_info.num_proc == 0, "Wrong number of elements. Please, note:  num_of_elem mod num_proc = 0");
 
 	int block_size = size/grid_info.grid_size;
 	int base_row = grid_info.row * block_size;
@@ -173,7 +174,6 @@ void matricesGenerator(int **A, int **B, const int size){
 void createCartesianTopology(grid_info_t *grid_info){
 	MPI_Comm_rank(MPI_COMM_WORLD, &(grid_info->rank));
 	MPI_Comm_size(MPI_COMM_WORLD, &(grid_info->num_proc));
-	ASSERT(grid_info->num_proc %2 == 0, "Wrong num of proc");
 
 	grid_info->grid_size = (int) sqrt(grid_info->num_proc);
 	ASSERT((grid_info->grid_size * (grid_info->grid_size)) == (grid_info->num_proc), "Wrong num of proc");
