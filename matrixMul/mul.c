@@ -121,8 +121,12 @@ int main(int argc, char **argv){
 		else{
 			printf("ALL OKAY\n");
 		}
+		Free(data);
 	}
 
+	free_2d(true);
+	Free(totalresult);
+	Free(result);
 
 	MPI_Finalize();
 	return 0;
