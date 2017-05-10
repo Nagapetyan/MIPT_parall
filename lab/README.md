@@ -15,7 +15,7 @@ In my case:
 -	f(t,x) = 0 
 
 
-[f1]: http://chart.apis.google.com/chart?cht=tx&chl=\frac{\partial{U(t,x)}}{\partial{t}}%2Ba\frac{\partial{U(t,x)}}\{partial{x}}=f(t,x)
+[f1]: http://chart.apis.google.com/chart?cht=tx&chl=\frac{\partial{U(t,x)}}{\partial{t}}%2Ba\frac{\partial{U(t,x)}}{\partial{x}}=f(t,x)
 [f2]: http://chart.apis.google.com/chart?cht=tx&chl=0\leq{x}\leq{X}
 [f3]: http://chart.apis.google.com/chart?cht=tx&chl=0\leq{t}\leq{T}
 [f4]: http://chart.apis.google.com/chart?cht=tx&chl=U(0,x)=\phi(x)
