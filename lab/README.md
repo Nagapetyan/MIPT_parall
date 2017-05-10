@@ -8,11 +8,11 @@
 To solve this problem we use a grid with steps  ![f6] in time и h in spacial. The function U(t,x) is considered at points ![f10], ![f11],
 ![f7], ![f8], ![f12], ![f13] 
 
-In my case:
-a = 1 \
-U(0,x)=0 \
-U(t,0)= t \
-f(t,x) = 0 
+In my case: \
+	a = 1 \
+	U(0,x)=0 \
+	U(t,0)= t \
+	f(t,x) = 0 
 
 
 [f1]: http://chart.apis.google.com/chart?cht=tx&chl=\frac{\partial{U(t,x)}}{\partial{t}}%2Ba\frac{\partial{U(t,x)}}\partial{x}}=f(t,x)
