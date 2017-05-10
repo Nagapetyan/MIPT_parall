@@ -9,10 +9,10 @@ To solve this problem we use a grid with steps  ![f6] in time и h in spacial. T
 ![f7], ![f8], ![f12], ![f13] 
 
 In my case: \
-?ts=4	a = 1 \
-?ts=4	U(0,x)=x \
-?ts=4	U(t,0)= t \
-?ts=4	f(t,x) = 0 
+-	a = 1 \
+-	U(0,x)=x \
+-	U(t,0)= t \
+-	f(t,x) = 0 
 
 
 [f1]: http://chart.apis.google.com/chart?cht=tx&chl=\frac{\partial{U(t,x)}}{\partial{t}}%2Ba\frac{\partial{U(t,x)}}\partial{x}}=f(t,x)
